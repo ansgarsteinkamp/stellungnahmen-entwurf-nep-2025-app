@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect, useRef } from "react";
-import { ChevronRight, ChevronDown, ArrowRight } from "lucide-react";
+import { ChevronRight, ChevronDown, ArrowRight, ArrowDownAZ, ArrowDownWideNarrow } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import SearchInput from "@/components/custom/SearchInput";
@@ -7,17 +7,17 @@ import { getStatementText } from "@/lib/helpers";
 
 const KAPITEL_ORDER = [
    "Executive Summary",
-   "Kapitel 1",
-   "Kapitel 2",
-   "Kapitel 3",
-   "Kapitel 4",
-   "Kapitel 5",
-   "Kapitel 6",
-   "Kapitel 7",
-   "Kapitel 8",
-   "Anhänge/Anlagen",
+   "Kapitel 1: Einführung",
+   "Kapitel 2: Genehmigter Szenariorahmen",
+   "Kapitel 3: Rahmenbedingungen und Eingangsgrößen der Modellierung",
+   "Kapitel 4: Stand der Umsetzung von Netzausbaumaßnahmen",
+   "Kapitel 5: Versorgungssicherheitsbetrachtung für Methan 2030",
+   "Kapitel 6: Szenarienbasierte Modellierungen für 2037 und 2045",
+   "Kapitel 7: Netzausbauvorschlag",
+   "Kapitel 8: Schlusswort und Ausblick",
+   "Anhänge und Anlagen",
+   "Generelle Anmerkungen",
    "NEP-Gas-Datenbank",
-   "Generelle Anmerkungen"
 ];
 
 export default function OrgView({ organisationen, themen, orgMap, selectedNr, onSelectNr, onNavigateToThema, onNavigateToSearch }) {
@@ -48,7 +48,7 @@ export default function OrgView({ organisationen, themen, orgMap, selectedNr, on
 
    const filtered = useMemo(() => {
       const q = search.toLowerCase();
-      return organisationen.filter(o => !q || o.organisation.toLowerCase().includes(q) || o.abkürzung.toLowerCase().includes(q) || (o.zusammenfassung || "").toLowerCase().includes(q));
+      return organisationen.filter(o => !q || o.organisation.toLowerCase().includes(q) || o.abkürzung.toLowerCase().includes(q));
    }, [organisationen, search]);
 
    const sorted = useMemo(() => {
@@ -95,18 +95,19 @@ export default function OrgView({ organisationen, themen, orgMap, selectedNr, on
       <div className="flex h-full max-w-[1600px] mx-auto">
          {/* Sidebar */}
          <div className="w-80 lg:w-[420px] xl:w-[480px] border-r border-border flex flex-col shrink-0 overflow-hidden">
-            <div className="p-3 space-y-2 border-b border-border shrink-0">
-               <SearchInput value={search} setValue={setSearch} placeholder="Organisationen durchsuchen..." size="sm" />
+            <div className="p-3 space-y-4 border-b border-border shrink-0">
+               <SearchInput value={search} setValue={setSearch} placeholder="Name und Abkürzung der Organisationen durchsuchen..." size="sm" />
                <div className="flex gap-1">
                   {[
-                     { key: "alpha", label: "A\u2013Z" },
-                     { key: "count", label: "Themen" }
+                     { key: "alpha", label: "A\u2013Z", icon: ArrowDownAZ },
+                     { key: "count", label: "Anzahl Themen", icon: ArrowDownWideNarrow }
                   ].map(s => (
                      <button
                         key={s.key}
                         onClick={() => setSortBy(s.key)}
-                        className={cn("px-2 py-0.5 text-xs rounded transition-colors", sortBy === s.key ? "bg-primary/20 text-primary" : "text-muted-foreground hover:text-foreground")}
+                        className={cn("flex items-center gap-1.5 px-2 py-0.5 text-xs rounded transition-colors", sortBy === s.key ? "bg-primary/20 text-primary" : "text-muted-foreground hover:text-foreground")}
                      >
+                        <s.icon className="size-3" />
                         {s.label}
                      </button>
                   ))}
@@ -145,7 +146,7 @@ export default function OrgView({ organisationen, themen, orgMap, selectedNr, on
                   {/* Stellungnahmen */}
                   <div className="mt-5">
                      <h2 className="text-xs font-medium uppercase tracking-wider text-muted-foreground mb-3">
-                        Ungekürztes Original der Stellungnahmen zu einzelnen Kapiteln ({selectedOrg.stellungnahmen.length})
+                        Ungekürzte Stellungnahmen zu einzelnen Kapiteln ({selectedOrg.stellungnahmen.length})
                      </h2>
                      <div className="space-y-1.5">
                         {sortedStatements.map(s => {

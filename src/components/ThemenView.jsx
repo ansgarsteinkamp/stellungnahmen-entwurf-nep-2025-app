@@ -47,7 +47,7 @@ export default function ThemenView({ themen, orgMap, selectedIdx, onSelectIdx, o
          {/* Sidebar */}
          <div className="w-80 lg:w-[420px] xl:w-[480px] border-r border-border flex flex-col shrink-0 overflow-hidden">
             <div className="p-3 space-y-2 border-b border-border shrink-0">
-               <SearchInput value={search} setValue={setSearch} placeholder="Themen durchsuchen..." size="sm" />
+               <SearchInput value={search} setValue={setSearch} placeholder="Titel und Kurzbeschreibung der Themen durchsuchen..." size="sm" />
             </div>
             <div className="flex-1 min-h-0">
                <ScrollArea className="h-full">
@@ -101,7 +101,7 @@ export default function ThemenView({ themen, orgMap, selectedIdx, onSelectIdx, o
                                  </button>
                                  {isExpanded && (
                                     <div className="px-3 pb-3 pt-2 border-t border-border/40 space-y-2">
-                                       <p className="text-3xs uppercase tracking-wider text-muted-foreground">Zusammenfassung aller Stellungnahmen</p>
+                                       <p className="text-3xs uppercase tracking-wider text-muted-foreground">Zusammenfassung der Stellungnahmen der Organisation</p>
                                        <p className="text-xs text-foreground/70 leading-relaxed whitespace-pre-line">{org.zusammenfassung}</p>
                                        <button
                                           onClick={e => {
@@ -110,7 +110,7 @@ export default function ThemenView({ themen, orgMap, selectedIdx, onSelectIdx, o
                                           }}
                                           className="flex items-center gap-1 text-xs text-primary hover:underline"
                                        >
-                                          Alle Stellungnahmen der Organisation ansehen
+                                          Ungekürzte Stellungnahmen der Organisation ansehen
                                           <ArrowRight className="size-3" />
                                        </button>
                                     </div>

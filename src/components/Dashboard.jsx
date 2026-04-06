@@ -61,9 +61,17 @@ function ChartSection({ title, children }) {
 
 const KAPITEL_ORDER = [
    "Executive Summary",
-   "Kapitel 1", "Kapitel 2", "Kapitel 3", "Kapitel 4",
-   "Kapitel 5", "Kapitel 6", "Kapitel 7", "Kapitel 8",
-   "Anhänge/Anlagen", "NEP-Gas-Datenbank", "Generelle Anmerkungen",
+   "Kapitel 1: Einführung",
+   "Kapitel 2: Genehmigter Szenariorahmen",
+   "Kapitel 3: Rahmenbedingungen und Eingangsgrößen der Modellierung",
+   "Kapitel 4: Stand der Umsetzung von Netzausbaumaßnahmen",
+   "Kapitel 5: Versorgungssicherheitsbetrachtung für Methan 2030",
+   "Kapitel 6: Szenarienbasierte Modellierungen für 2037 und 2045",
+   "Kapitel 7: Netzausbauvorschlag",
+   "Kapitel 8: Schlusswort und Ausblick",
+   "Anhänge und Anlagen",
+   "Generelle Anmerkungen",
+   "NEP-Gas-Datenbank",
 ];
 
 export default function Dashboard({ themen, organisationen, orgMap, onNavigateToThema, onNavigateToOrg, onNavigateToSearch }) {
@@ -80,11 +88,11 @@ export default function Dashboard({ themen, organisationen, orgMap, onNavigateTo
       const avgThemesPerOrg = ([...themesPerOrg.values()].reduce((s, c) => s + c, 0) / organisationen.length).toFixed(1);
 
       const sortedThemen = themen.map((t, i) => ({ thema: t.thema, count: t.organisationen.length, idx: i })).sort((a, b) => b.count - a.count);
-      const topThemen = sortedThemen.slice(0, 20);
+      const topThemen = sortedThemen.slice(0, 10);
 
       const topOrgs = [...themesPerOrg.entries()]
          .sort((a, b) => b[1] - a[1])
-         .slice(0, 20)
+         .slice(0, 10)
          .map(([nr, count]) => {
             const org = orgMap.get(String(nr));
             return {
@@ -120,7 +128,7 @@ export default function Dashboard({ themen, organisationen, orgMap, onNavigateTo
       }
       const topSchlagworte = Object.entries(swCounts)
          .sort((a, b) => b[1] - a[1])
-         .slice(0, 20)
+         .slice(0, 10)
          .map(([sw, count]) => ({ sw, count }));
 
       return { avgThemesPerOrg, avgOrgsPerThema, topThemen, topOrgs, chapters, chaptersMax, topSchlagworte };
@@ -137,13 +145,13 @@ export default function Dashboard({ themen, organisationen, orgMap, onNavigateTo
                </div>
 
                <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-8">
-                  <ChartSection title="Themen, die von vielen Organisationen angesprochen wurden">
+                  <ChartSection title="Top 10 — Häufig angesprochene Themen">
                      {stats.topThemen.map(t => (
                         <BarRow key={t.idx} label={t.thema} value={t.count} max={stats.topThemen[0]?.count || 1} suffix=" Org." onClick={() => onNavigateToThema(t.idx)} valueTooltip={`${t.count} Organisation${t.count !== 1 ? "en" : ""}`} />
                      ))}
                   </ChartSection>
 
-                  <ChartSection title="Organisationen mit den meisten Themen">
+                  <ChartSection title="Top 10 — Organisationen mit den meisten Themen">
                      {stats.topOrgs.map(o => (
                         <BarRow key={o.nr} label={o.fullName} value={o.count} max={stats.topOrgs[0]?.count || 1} suffix=" Themen" onClick={() => onNavigateToOrg(o.nr)} labelTooltip={o.label} valueTooltip={`${o.count} Themen`} />
                      ))}
@@ -151,13 +159,13 @@ export default function Dashboard({ themen, organisationen, orgMap, onNavigateTo
                </div>
 
                <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-8">
-                  <ChartSection title="Anzahl Stellungnahmen pro Kapitel">
+                  <ChartSection title="Stellungnahmen pro Kapitel">
                      {stats.chapters.map(c => (
                         <BarRow key={c.kapitel} label={c.kapitel} value={c.count} max={stats.chaptersMax} suffix=" Einr." onClick={() => onNavigateToSearch(c.kapitel)} labelTooltip={false} valueTooltip={`${c.count} Stellungnahme${c.count !== 1 ? "n" : ""}`} />
                      ))}
                   </ChartSection>
 
-                  <ChartSection title="Schlagworte, die häufig ausgewählt wurden">
+                  <ChartSection title="Top 10 — Häufig verwendete Schlagworte">
                      {stats.topSchlagworte.map(s => (
                         <BarRow key={s.sw} label={s.sw} value={s.count} max={stats.topSchlagworte[0]?.count || 1} suffix=" Nenn." onClick={() => onNavigateToSearch(s.sw)} valueTooltip={`${s.count} Nennung${s.count !== 1 ? "en" : ""}`} />
                      ))}
