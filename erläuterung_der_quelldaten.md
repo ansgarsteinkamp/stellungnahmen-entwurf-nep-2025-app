@@ -6,9 +6,14 @@ Diese Datei beschreibt Struktur, Feldbedeutungen und fachlichen Hintergrund der 
 
 Der Netzentwicklungsplan (NEP) Gas und Wasserstoff 2025 beschreibt den notwendigen Aus- und Umbau der deutschen Gas- und Wasserstoffinfrastruktur. Er wird von den Fernleitungsnetzbetreibern (FNB) erstellt und von der Bundesnetzagentur (BNetzA) bestätigt. Im Rahmen einer öffentlichen Konsultation (März 2026) konnten Organisationen Stellungnahmen zum NEP-Entwurf einreichen – entweder kapitelweise über ein Online-Formular (mit thematischen Schlagwörtern, max. 2.000 Zeichen pro Feld) oder postalisch als PDF.
 
-**Wichtig:** Die Anzahl der Stellungnahmen pro Organisation ist kein inhaltliches Maß. Sie ergibt sich allein aus dem Einreichungsformat: Wer das Online-Formular kapitelweise nutzte, erzeugte mehrere Einträge; wer alles in ein Kapitel schrieb oder als PDF einreichte, hat nur einen.
+`quelldaten.json` enthält die Stellungnahmen von 44 Organisationen sowie eine thematische Clusterung in 100–150 Themen. Pro Organisation liegen zwei Ebenen vor:
 
-`quelldaten.json` enthält alle 180 eingereichten Stellungnahmen von 44 Organisationen sowie eine thematische Clusterung dieser Stellungnahmen in 100–150 Themen. Der Themen-Block ist der zentrale Datenbestand für die App: Er zeigt, welche Themen wie häufig adressiert wurden und welche Organisationen welche Themen ansprechen.
+- **Zusammenfassung der Stellungnahmen** (`zusammenfassung`) — eine verdichtete Gesamtaussage über alles, was die Organisation eingereicht hat.
+- **Einzelstellungnahmen** (`stellungnahmen[]`) — die konkreten Einreichungen der Organisation, jeweils mit Kapitelbezug und Originaltext. Pro Organisation gibt es 1 bis 12 Einzelstellungnahmen.
+
+**Wichtig:** Die Anzahl der Einzelstellungnahmen pro Organisation ist kein inhaltliches Maß. Sie ergibt sich allein aus dem Einreichungsformat: Wer das Online-Formular kapitelweise nutzte, erzeugte mehrere Einträge; wer alles in ein Kapitel schrieb oder als PDF einreichte, hat nur einen. Auch die Gesamtzahl (derzeit 180) ist daher ein Artefakt und sollte in der App nicht prominent dargestellt werden. Aussagekräftig sind die Anzahl der **Organisationen** (44) und der **Themen** (100–150).
+
+Der Themen-Block ist der zentrale Datenbestand für die App: Er zeigt, welche Themen wie häufig adressiert wurden und welche Organisationen welche Themen ansprechen.
 
 Die typischen Nutzer der App sind Fachexperten der FNB.
 
@@ -17,8 +22,8 @@ Die typischen Nutzer der App sind Fachexperten der FNB.
 | Kennzahl                                        | Wert                                                |
 | ----------------------------------------------- | --------------------------------------------------- |
 | Organisationen                                  | 44                                                  |
-| Stellungnahmen gesamt                           | 180                                                 |
-| Max. Stellungnahmen pro Organisation            | 12                                                  |
+| Einzelstellungnahmen gesamt                     | 180 (Artefakt des Einreichungsformats, siehe oben)  |
+| Max. Einzelstellungnahmen pro Organisation      | 12                                                  |
 | Themen                                          | 100–150 (aktuell 138, kann sich noch leicht ändern) |
 | Max. Organisationen pro Thema                   | 16                                                  |
 | Max. Zeichenlänge `stellungnahme`               | ca. 5.000                                           |
@@ -39,7 +44,7 @@ quelldaten.json
 │   ├── abkürzung
 │   ├── email_endung
 │   ├── zusammenfassung
-│   └── stellungnahmen[]  ─── Array der Einzelstellungnahmen dieser Org
+│   └── stellungnahmen[]  ─── Einzelstellungnahmen dieser Org (1–12 Stück)
 │       ├── #
 │       ├── kapitel
 │       ├── schlagworte[]
@@ -60,7 +65,7 @@ themen[].organisationen[]  ──nr──►  organisationen[].nr
                                       └── .stellungnahmen[]   (Einzeltexte der Org)
 ```
 
-Die Verknüpfung läuft über `nr` (Organisations-Nummer). Von einem Thema aus gelangt man zu den Organisationen, die dieses Thema adressiert haben. Pro Organisation steht die `zusammenfassung` als verdichtete Gesamtaussage bereit; die einzelnen `stellungnahmen` liefern die Detailebene.
+Die Verknüpfung läuft über `nr` (Organisations-Nummer). Von einem Thema aus gelangt man zu den Organisationen, die dieses Thema adressiert haben. Pro Organisation steht die **Zusammenfassung der Stellungnahmen** als verdichtete Gesamtaussage bereit; die **Einzelstellungnahmen** liefern die Detailebene.
 
 Es gibt keine direkte Verknüpfung zwischen einem Thema und einer bestimmten Einzelstellungnahme – die Zuordnung existiert nur auf Organisationsebene.
 
@@ -88,8 +93,8 @@ Es gibt keine direkte Verknüpfung zwischen einem Thema und einer bestimmten Ein
 | `organisation`    | String | Vollständiger Name der Organisation (manuell erfasst).                                                             |
 | `abkürzung`       | String | Kurzform, z.B. "VKU", "BDEW" (nachträglich vergeben). Eignet sich als kompakte Anzeige in der UI.                  |
 | `email_endung`    | String | E-Mail-Domain der einreichenden Person, z.B. "vku.de" (manuell erfasst). Hinweis auf institutionellen Hintergrund. |
-| `zusammenfassung` | String | Verdichtung aller Stellungnahmen dieser Organisation zu einer Gesamtaussage. Bis ca. 5.300 Zeichen.                |
-| `stellungnahmen`  | Array  | Die einzelnen Stellungnahme-Einträge dieser Organisation (1 bis 12 Stück).                                         |
+| `zusammenfassung` | String | **Zusammenfassung der Stellungnahmen:** Verdichtung aller Einzelstellungnahmen dieser Organisation zu einer Gesamtaussage. Bis ca. 5.300 Zeichen. |
+| `stellungnahmen`  | Array  | **Einzelstellungnahmen:** Die konkreten Einreichungen dieser Organisation (1 bis 12 Stück), jeweils mit Kapitelbezug und Originaltext.             |
 
 ### stellungnahmen[]
 

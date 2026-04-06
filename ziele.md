@@ -2,7 +2,7 @@
 
 ## Fachlicher Kontext
 
-Im Rahmen der öffentlichen Konsultation zum Entwurf des Netzentwicklungsplans (NEP) Gas und Wasserstoff 2025 haben 44 Organisationen insgesamt 180 Stellungnahmen eingereicht. Diese wurden in ca. 138 Themen geclustert. Die vollständige Datenbeschreibung steht in `erläuterung_der_quelldaten.md` — **lies diese Datei vollständig**, bevor du mit der Umsetzung beginnst.
+Im Rahmen der öffentlichen Konsultation zum Entwurf des Netzentwicklungsplans (NEP) Gas und Wasserstoff 2025 haben 44 Organisationen Stellungnahmen eingereicht. Diese wurden in ca. 138 Themen geclustert. Pro Organisation gibt es eine **Zusammenfassung der Stellungnahmen** (verdichtete Gesamtaussage) und **Einzelstellungnahmen** (die konkreten Einreichungen mit Kapitelbezug). Die vollständige Datenbeschreibung steht in `erläuterung_der_quelldaten.md` — **lies diese Datei vollständig**, bevor du mit der Umsetzung beginnst.
 
 ## Zielgruppe
 
@@ -15,7 +15,7 @@ Die App soll ihren Nutzern helfen, folgende Fragen zu beantworten:
 - **Schwerpunkte erkennen** — Welche Themen waren besonders präsent?
 - **Themen verstehen** — Worum geht es bei einem bestimmten Thema?
 - **Akteure sehen** — Welche Organisationen stehen hinter einem Thema?
-- **Positionen lesen** — Was sagt eine Organisation insgesamt und im Detail?
+- **Positionen lesen** — Was sagt eine Organisation insgesamt (Zusammenfassung der Stellungnahmen) und im Detail (Einzelstellungnahmen)?
 - **Gezielt finden** — Wo taucht ein bestimmter Begriff, ein Thema oder eine Organisation auf?
 
 Diese Ziele sind bewusst offen formuliert. Es gibt keine Vorgaben für Darstellungsform, Navigationsstruktur oder Interaktionsmuster. Du entscheidest, wie du diese Ziele umsetzt.
