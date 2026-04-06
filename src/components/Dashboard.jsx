@@ -129,15 +129,15 @@ export default function Dashboard({ themen, organisationen, orgMap, onNavigateTo
    return (
       <TooltipProvider>
          <ScrollArea className="h-full">
-         <div className="p-6 lg:p-8">
-            <div className="max-w-[1600px] mx-auto space-y-8">
+         <div className="px-6 lg:px-8 py-10 lg:py-12">
+            <div className="max-w-[1600px] mx-auto space-y-12">
                <div className="grid grid-cols-2 gap-4 max-w-lg mx-auto">
                   <StatCard label="Organisationen" value={organisationen.length} subtitle={`Ø ${stats.avgThemesPerOrg} Themen pro Organisation`} />
                   <StatCard label="Themen" value={themen.length} subtitle={`Ø ${stats.avgOrgsPerThema} Organisationen pro Thema`} />
                </div>
 
                <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-8">
-                  <ChartSection title="Themen, die von vielen Organisationen angesprochen werden">
+                  <ChartSection title="Themen, die von vielen Organisationen angesprochen wurden">
                      {stats.topThemen.map(t => (
                         <BarRow key={t.idx} label={t.thema} value={t.count} max={stats.topThemen[0]?.count || 1} suffix=" Org." onClick={() => onNavigateToThema(t.idx)} valueTooltip={`${t.count} Organisation${t.count !== 1 ? "en" : ""}`} />
                      ))}
@@ -148,14 +148,16 @@ export default function Dashboard({ themen, organisationen, orgMap, onNavigateTo
                         <BarRow key={o.nr} label={o.fullName} value={o.count} max={stats.topOrgs[0]?.count || 1} suffix=" Themen" onClick={() => onNavigateToOrg(o.nr)} labelTooltip={o.label} valueTooltip={`${o.count} Themen`} />
                      ))}
                   </ChartSection>
+               </div>
 
+               <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-8">
                   <ChartSection title="Anzahl Stellungnahmen pro Kapitel">
                      {stats.chapters.map(c => (
                         <BarRow key={c.kapitel} label={c.kapitel} value={c.count} max={stats.chaptersMax} suffix=" Einr." onClick={() => onNavigateToSearch(c.kapitel)} labelTooltip={false} valueTooltip={`${c.count} Stellungnahme${c.count !== 1 ? "n" : ""}`} />
                      ))}
                   </ChartSection>
 
-                  <ChartSection title="Schlagworte, die häufig verwendet werden">
+                  <ChartSection title="Schlagworte, die häufig ausgewählt wurden">
                      {stats.topSchlagworte.map(s => (
                         <BarRow key={s.sw} label={s.sw} value={s.count} max={stats.topSchlagworte[0]?.count || 1} suffix=" Nenn." onClick={() => onNavigateToSearch(s.sw)} valueTooltip={`${s.count} Nennung${s.count !== 1 ? "en" : ""}`} />
                      ))}
