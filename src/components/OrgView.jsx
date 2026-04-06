@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect, useRef } from "react";
-import { ChevronRight, ChevronDown, ArrowRight, ArrowDownAZ, ArrowDownWideNarrow } from "lucide-react";
+import { ChevronRight, ChevronDown, ArrowRight, ArrowDownAZ, ArrowDownWideNarrow, Tag, AtSign } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import SearchInput from "@/components/custom/SearchInput";
@@ -139,8 +139,8 @@ export default function OrgView({ organisationen, themen, orgMap, selectedNr, on
                <div className="p-6 lg:p-8">
                   <h1 className="text-xl font-medium text-foreground leading-snug">{selectedOrg.organisation}</h1>
                   <div className="flex items-center gap-3 mt-1 text-sm text-muted-foreground">
-                     <span className="text-primary font-medium">{selectedOrg.abkürzung}</span>
-                     <span>{selectedOrg.email_endung}</span>
+                     <span className="flex items-center gap-1 text-primary font-medium"><Tag className="size-3.5" />{selectedOrg.abkürzung}</span>
+                     <span className="flex items-center gap-1"><AtSign className="size-3.5" />{selectedOrg.email_endung}</span>
                   </div>
 
                   {/* Stellungnahmen */}
