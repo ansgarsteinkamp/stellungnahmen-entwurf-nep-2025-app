@@ -66,6 +66,14 @@ Vollständige Dokumentation in `erläuterung_der_quelldaten.md`. Implementierung
 - Primär für Desktop-Browser optimieren. Auf Mobilgeräten grundlegend nutzbar, aber kein optimiertes Mobile-Erlebnis nötig.
 - Kein linksbündiges Layout: Container mit `max-w-*` immer mit `mx-auto` zentrieren.
 
+## Git-Commits
+
+Nur committen, wenn der User es ausdrücklich wünscht. Commit-Stil:
+
+- Commit-Message auf Englisch, kurz und prägnant (Imperative Mood)
+- `Co-Authored-By: Claude Opus 4.6 (1M context) <noreply@anthropic.com>` als letzte Zeile
+- Nur die vom User genannten Dateien stagen — kein `git add -A`
+
 ## Deployment
 
 Gebaut für GitHub Pages mit Base-Pfad `/stellungnahmen-entwurf-nep-2025-app/` (gesetzt in `vite.config.js`).
