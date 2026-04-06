@@ -87,14 +87,14 @@ Es gibt keine direkte Verknüpfung zwischen einem Thema und einer bestimmten Ein
 
 ### organisationen[]
 
-| Feld              | Typ    | Beschreibung                                                                                                       |
-| ----------------- | ------ | ------------------------------------------------------------------------------------------------------------------ |
-| `nr`              | String | Organisations-Nummer ("1" bis "44"). Primärschlüssel, auf den `themen[].organisationen` verweist.                  |
-| `organisation`    | String | Vollständiger Name der Organisation (manuell erfasst).                                                             |
-| `abkürzung`       | String | Kurzform, z.B. "VKU", "BDEW" (nachträglich vergeben). Eignet sich als kompakte Anzeige in der UI.                  |
-| `email_endung`    | String | E-Mail-Domain der einreichenden Person, z.B. "vku.de" (manuell erfasst). Hinweis auf institutionellen Hintergrund. |
+| Feld              | Typ    | Beschreibung                                                                                                                                      |
+| ----------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `nr`              | String | Organisations-Nummer ("1" bis "44"). Primärschlüssel, auf den `themen[].organisationen` verweist.                                                 |
+| `organisation`    | String | Vollständiger Name der Organisation (manuell erfasst).                                                                                            |
+| `abkürzung`       | String | Kurzform, z.B. "VKU", "BDEW" (nachträglich vergeben). Eignet sich als kompakte Anzeige in der UI.                                                 |
+| `email_endung`    | String | E-Mail-Domain der einreichenden Person, z.B. "vku.de" (manuell erfasst). Hinweis auf institutionellen Hintergrund.                                |
 | `zusammenfassung` | String | **Zusammenfassung der Stellungnahmen:** Verdichtung aller Einzelstellungnahmen dieser Organisation zu einer Gesamtaussage. Bis ca. 5.300 Zeichen. |
-| `stellungnahmen`  | Array  | **Einzelstellungnahmen:** Die konkreten Einreichungen dieser Organisation (1 bis 12 Stück), jeweils mit Kapitelbezug und Originaltext.             |
+| `stellungnahmen`  | Array  | **Einzelstellungnahmen:** Die konkreten Einreichungen dieser Organisation (1 bis 12 Stück), jeweils mit Kapitelbezug und Originaltext.            |
 
 ### stellungnahmen[]
 
@@ -192,6 +192,6 @@ Es gibt keine direkte Verknüpfung zwischen einem Thema und einer bestimmten Ein
 
 **`#` als JSON-Key:** Das Zeichen `#` ist in JavaScript ein reserviertes Zeichen für Private Class Fields. Zugriff nur per Bracket-Notation: `s["#"]`, nicht `s.#` (Syntaxfehler).
 
-**Abwesendes `dokument`-Feld:** Bei den 40 Online-Organisationen fehlt der Key `dokument` komplett. Prüfung per `"dokument" in s` (nicht `s.dokument`, da das auch bei `null` falsy wäre).
+**Abwesendes `dokument`-Feld:** Bei den 40 Online-Organisationen fehlt der Key `dokument` komplett. Prüfung per `"dokument" in s` (nicht `s.dokument`, da der Key bei Online-Einreichungen fehlt und `undefined` zurückgäbe).
 
 **Umlaut-Keys:** Mehrere Feldnamen enthalten Umlaute (`abkürzung`, `zusammenfassung`). In JavaScript unproblematisch, aber bei URL-Encoding oder als CSS-Klassen zu beachten.
