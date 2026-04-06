@@ -8,8 +8,8 @@ export default function ThemenView({ themen, orgMap, selectedIdx, onSelectIdx, o
    const [search, setSearch] = useState("");
    const [expandedOrgs, setExpandedOrgs] = useState(new Set());
 
-   const toggleOrg = (nr) =>
-      setExpandedOrgs((prev) => {
+   const toggleOrg = nr =>
+      setExpandedOrgs(prev => {
          const next = new Set(prev);
          if (next.has(nr)) next.delete(nr);
          else next.add(nr);
@@ -18,9 +18,7 @@ export default function ThemenView({ themen, orgMap, selectedIdx, onSelectIdx, o
 
    const filtered = useMemo(() => {
       const q = search.toLowerCase();
-      return themen
-         .map((t, i) => ({ ...t, _idx: i }))
-         .filter((t) => !q || t.thema.toLowerCase().includes(q) || t.beschreibung.toLowerCase().includes(q));
+      return themen.map((t, i) => ({ ...t, _idx: i })).filter(t => !q || t.thema.toLowerCase().includes(q) || t.beschreibung.toLowerCase().includes(q));
    }, [themen, search]);
 
    const sorted = useMemo(() => {
@@ -53,15 +51,13 @@ export default function ThemenView({ themen, orgMap, selectedIdx, onSelectIdx, o
             </div>
             <div className="flex-1 min-h-0">
                <ScrollArea className="h-full">
-                  {sorted.map((t) => (
+                  {sorted.map(t => (
                      <button
                         key={t._idx}
                         onClick={() => onSelectIdx(t._idx)}
                         className={cn(
                            "w-full text-left px-3 py-2.5 border-b border-border/40 transition-colors",
-                           selectedIdx === t._idx
-                              ? "bg-accent border-l-2 border-l-primary"
-                              : "hover:bg-accent/50"
+                           selectedIdx === t._idx ? "bg-accent border-l-2 border-l-primary" : "hover:bg-accent/50"
                         )}
                      >
                         <div className="text-sm leading-snug line-clamp-2">{t.thema}</div>
@@ -70,9 +66,7 @@ export default function ThemenView({ themen, orgMap, selectedIdx, onSelectIdx, o
                         </div>
                      </button>
                   ))}
-                  {sorted.length === 0 && (
-                     <div className="p-4 text-sm text-muted-foreground">Keine Themen gefunden.</div>
-                  )}
+                  {sorted.length === 0 && <div className="p-4 text-sm text-muted-foreground">Keine Themen gefunden.</div>}
                </ScrollArea>
             </div>
          </div>
@@ -80,57 +74,43 @@ export default function ThemenView({ themen, orgMap, selectedIdx, onSelectIdx, o
          {/* Detail */}
          <ScrollArea className="flex-1" ref={detailRef}>
             {selectedThema ? (
-               <div className="p-6 lg:p-8 max-w-4xl">
+               <div className="p-6 lg:p-8">
                   <h1 className="text-xl font-medium text-foreground leading-snug">{selectedThema.thema}</h1>
                   <div className="mt-1 text-sm text-primary">
-                     {selectedThema.organisationen.length} Organisation{selectedThema.organisationen.length !== 1 && "en"}
+                     Angesprochen von {selectedThema.organisationen.length} Organisation{selectedThema.organisationen.length !== 1 && "en"}
                   </div>
 
                   <div className="mt-5">
-                     <h2 className="text-xs font-medium uppercase tracking-wider text-muted-foreground mb-2">
-                        Themen-Beschreibung
-                     </h2>
-                     <p className="text-sm text-foreground/80 leading-relaxed whitespace-pre-line">
-                        {selectedThema.beschreibung}
-                     </p>
+                     <h2 className="text-xs font-medium uppercase tracking-wider text-muted-foreground mb-2">Worum es geht</h2>
+                     <p className="text-sm text-foreground/80 leading-relaxed whitespace-pre-line">{selectedThema.beschreibung}</p>
                   </div>
 
                   <div className="mt-8">
-                     <h2 className="text-xs font-medium uppercase tracking-wider text-muted-foreground mb-3">
-                        Beteiligte Organisationen
-                     </h2>
+                     <h2 className="text-xs font-medium uppercase tracking-wider text-muted-foreground mb-3">Angesprochen von</h2>
                      <div className="space-y-1.5">
-                        {selectedThema.organisationen.map((nr) => {
+                        {selectedThema.organisationen.map(nr => {
                            const org = orgMap.get(String(nr));
                            if (!org) return null;
                            const isExpanded = expandedOrgs.has(nr);
                            return (
                               <div key={nr} className="rounded-lg border border-border/60 overflow-hidden">
-                                 <button
-                                    onClick={() => toggleOrg(nr)}
-                                    className="w-full flex items-center gap-2 px-3 py-2.5 text-left hover:bg-accent/50 transition-colors"
-                                 >
-                                    {isExpanded ? (
-                                       <ChevronDown className="size-3.5 text-muted-foreground shrink-0" />
-                                    ) : (
-                                       <ChevronRight className="size-3.5 text-muted-foreground shrink-0" />
-                                    )}
+                                 <button onClick={() => toggleOrg(nr)} className="w-full flex items-center gap-2 px-3 py-2.5 text-left hover:bg-accent/50 transition-colors">
+                                    {isExpanded ? <ChevronDown className="size-3.5 text-muted-foreground shrink-0" /> : <ChevronRight className="size-3.5 text-muted-foreground shrink-0" />}
                                     <span className="text-sm font-medium text-primary">{org.abkürzung}</span>
                                     <span className="text-xs text-muted-foreground truncate">{org.organisation}</span>
                                  </button>
                                  {isExpanded && (
                                     <div className="px-3 pb-3 pt-2 border-t border-border/40 space-y-2">
-                                       <p className="text-xs text-foreground/70 leading-relaxed whitespace-pre-line">
-                                          {org.zusammenfassung}
-                                       </p>
+                                       <p className="text-3xs uppercase tracking-wider text-muted-foreground">Zusammenfassung aller Stellungnahmen</p>
+                                       <p className="text-xs text-foreground/70 leading-relaxed whitespace-pre-line">{org.zusammenfassung}</p>
                                        <button
-                                          onClick={(e) => {
+                                          onClick={e => {
                                              e.stopPropagation();
                                              onNavigateToOrg(org.nr);
                                           }}
                                           className="flex items-center gap-1 text-xs text-primary hover:underline"
                                        >
-                                          Original-Stellungnahmen ansehen
+                                          Alle Stellungnahmen der Organisation ansehen
                                           <ArrowRight className="size-3" />
                                        </button>
                                     </div>
@@ -142,9 +122,7 @@ export default function ThemenView({ themen, orgMap, selectedIdx, onSelectIdx, o
                   </div>
                </div>
             ) : (
-               <div className="flex items-center justify-center h-full text-muted-foreground text-sm">
-                  Thema aus der Liste auswählen
-               </div>
+               <div className="flex items-center justify-center h-full text-muted-foreground text-sm">Thema aus der Liste auswählen</div>
             )}
          </ScrollArea>
       </div>
