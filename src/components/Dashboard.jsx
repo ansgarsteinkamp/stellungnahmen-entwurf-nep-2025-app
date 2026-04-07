@@ -74,7 +74,7 @@ const KAPITEL_ORDER = [
    "NEP-Gas-Datenbank",
 ];
 
-export default function Dashboard({ themen, organisationen, orgMap, onNavigateToThema, onNavigateToOrg, onNavigateToSearch }) {
+export default function Dashboard({ themen, organisationen, orgMap, onNavigateToThema, onNavigateToOrg }) {
    const stats = useMemo(() => {
       const avgOrgsPerThema = (themen.reduce((s, t) => s + t.organisationen.length, 0) / themen.length).toFixed(1);
 

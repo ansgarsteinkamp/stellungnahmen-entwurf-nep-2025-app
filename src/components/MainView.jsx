@@ -67,11 +67,6 @@ export default function MainView({ organisationen, themen }) {
       });
    }, []);
 
-   // Navigate to search with pre-filled query
-   const navigateToSearch = useCallback((query) => {
-      setNavState((prev) => makeState("suche", prev.themaIdx, prev.orgNr, query));
-   }, []);
-
    // In-view selection: replaceState (no new history entry)
    const selectThemaIdx = useCallback((idx) => {
       setNavState((prev) => {
@@ -131,7 +126,6 @@ export default function MainView({ organisationen, themen }) {
                   orgMap={orgMap}
                   onNavigateToThema={navigateToThema}
                   onNavigateToOrg={navigateToOrg}
-                  onNavigateToSearch={navigateToSearch}
                />
             )}
             {navState.view === "themen" && (
