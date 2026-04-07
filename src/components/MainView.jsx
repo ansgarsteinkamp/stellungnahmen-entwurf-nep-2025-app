@@ -151,7 +151,6 @@ export default function MainView({ organisationen, themen }) {
                   selectedNr={navState.orgNr}
                   onSelectNr={selectOrgNr}
                   onNavigateToThema={navigateToThema}
-                  onNavigateToSearch={navigateToSearch}
                />
             )}
             {navState.view === "suche" && (

@@ -20,7 +20,7 @@ const KAPITEL_ORDER = [
    "NEP-Gas-Datenbank",
 ];
 
-export default function OrgView({ organisationen, themen, orgMap, selectedNr, onSelectNr, onNavigateToThema, onNavigateToSearch }) {
+export default function OrgView({ organisationen, themen, orgMap, selectedNr, onSelectNr, onNavigateToThema }) {
    const [search, setSearch] = useState("");
    const [sortBy, setSortBy] = useState("alpha");
    const [expandedStatements, setExpandedStatements] = useState(new Set());
@@ -166,13 +166,12 @@ export default function OrgView({ organisationen, themen, orgMap, selectedNr, on
                                        {s.schlagworte.length > 0 && (
                                           <div className="flex flex-wrap gap-1 mb-3">
                                              {s.schlagworte.map(sw => (
-                                                <button
+                                                <span
                                                    key={sw}
-                                                   onClick={() => onNavigateToSearch(sw)}
-                                                   className="px-1.5 py-0.5 text-3xs bg-primary/10 text-primary rounded hover:bg-primary/20 transition-colors"
+                                                   className="px-1.5 py-0.5 text-3xs bg-primary/10 text-primary rounded"
                                                 >
                                                    {sw}
-                                                </button>
+                                                </span>
                                              ))}
                                           </div>
                                        )}
