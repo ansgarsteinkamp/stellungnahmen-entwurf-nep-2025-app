@@ -161,13 +161,13 @@ export default function Dashboard({ themen, organisationen, orgMap, onNavigateTo
                <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-8">
                   <ChartSection title="Stellungnahmen pro Kapitel">
                      {stats.chapters.map(c => (
-                        <BarRow key={c.kapitel} label={c.kapitel} value={c.count} max={stats.chaptersMax} suffix=" Einr." onClick={() => onNavigateToSearch(c.kapitel)} labelTooltip={false} valueTooltip={`${c.count} Stellungnahme${c.count !== 1 ? "n" : ""}`} />
+                        <BarRow key={c.kapitel} label={c.kapitel} value={c.count} max={stats.chaptersMax} suffix=" Einr." labelTooltip={false} valueTooltip={`${c.count} Stellungnahme${c.count !== 1 ? "n" : ""}`} />
                      ))}
                   </ChartSection>
 
                   <ChartSection title="Top 10 — Häufig verwendete Schlagworte">
                      {stats.topSchlagworte.map(s => (
-                        <BarRow key={s.sw} label={s.sw} value={s.count} max={stats.topSchlagworte[0]?.count || 1} suffix=" Nenn." onClick={() => onNavigateToSearch(s.sw)} valueTooltip={`${s.count} Nennung${s.count !== 1 ? "en" : ""}`} />
+                        <BarRow key={s.sw} label={s.sw} value={s.count} max={stats.topSchlagworte[0]?.count || 1} suffix=" Nenn." valueTooltip={`${s.count} Nennung${s.count !== 1 ? "en" : ""}`} />
                      ))}
                   </ChartSection>
                </div>
