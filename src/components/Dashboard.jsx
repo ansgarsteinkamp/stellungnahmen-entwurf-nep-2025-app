@@ -153,7 +153,7 @@ export default function Dashboard({ themen, organisationen, orgMap, onNavigateTo
 
                   <ChartSection title="Top 10 — Organisationen mit den meisten Themen">
                      {stats.topOrgs.map(o => (
-                        <BarRow key={o.nr} label={o.fullName} value={o.count} max={stats.topOrgs[0]?.count || 1} suffix=" Themen" onClick={() => onNavigateToOrg(o.nr)} labelTooltip={o.label} valueTooltip={`${o.count} Themen`} />
+                        <BarRow key={o.nr} label={o.fullName} value={o.count} max={stats.topOrgs[0]?.count || 1} suffix=" Themen" onClick={() => onNavigateToOrg(o.nr)} valueTooltip={`${o.count} Themen`} />
                      ))}
                   </ChartSection>
                </div>
