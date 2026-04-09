@@ -28,7 +28,7 @@ export function jaccard(setA, setB) {
 
 export function computeSimilarityMatrix(organisationen, themen) {
    const themeSets = buildThemeSets(themen);
-   const orgNrs = organisationen.map(o => parseInt(o.nr));
+   const orgNrs = organisationen.map(o => parseInt(o.nr, 10));
    const n = orgNrs.length;
    const matrix = Array.from({ length: n }, () => new Float32Array(n));
 
