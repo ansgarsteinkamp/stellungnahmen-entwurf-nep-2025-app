@@ -20,12 +20,12 @@ const TABS = [
 
 const NAV_KEY = "mainview";
 
-function makeState(view, themaIdx = null, orgNr = null, selectedKapitel = null, selectedSchlagwort = null) {
+function makeState({ view, themaIdx = null, orgNr = null, selectedKapitel = null, selectedSchlagwort = null } = {}) {
    return { _nav: NAV_KEY, view, themaIdx, orgNr, selectedKapitel, selectedSchlagwort };
 }
 
 export default function MainView({ organisationen, themen }) {
-   const [navState, setNavState] = useState(() => makeState("dashboard"));
+   const [navState, setNavState] = useState(() => makeState({ view: "dashboard" }));
    const skipPushRef = useRef(false);
 
    const orgMap = useMemo(() => buildOrgMap(organisationen), [organisationen]);
@@ -51,12 +51,12 @@ export default function MainView({ organisationen, themen }) {
 
    // Initialize + listen to browser back/forward
    useEffect(() => {
-      window.history.replaceState(makeState("dashboard"), "");
+      window.history.replaceState(makeState({ view: "dashboard" }), "");
       const onPopstate = (e) => {
          if (e.state?._nav === NAV_KEY) {
             const s = e.state;
             skipPushRef.current = true;
-            setNavState(makeState(s.view, s.themaIdx, s.orgNr, s.selectedKapitel, s.selectedSchlagwort));
+            setNavState(makeState({ view: s.view, themaIdx: s.themaIdx, orgNr: s.orgNr, selectedKapitel: s.selectedKapitel, selectedSchlagwort: s.selectedSchlagwort }));
          }
       };
       window.addEventListener("popstate", onPopstate);
@@ -65,25 +65,25 @@ export default function MainView({ organisationen, themen }) {
 
    // Navigation: pushState (major nav = cross-view)
    const navigateToOrg = useCallback((nr) => {
-      setNavState(() => makeState("organisationen", null, String(nr)));
+      setNavState(() => makeState({ view: "organisationen", orgNr: String(nr) }));
    }, []);
 
    const navigateToThema = useCallback((idx) => {
-      setNavState(() => makeState("themen", idx));
+      setNavState(() => makeState({ view: "themen", themaIdx: idx }));
    }, []);
 
    const navigateToKapitel = useCallback((kapitel) => {
-      setNavState(() => makeState("kapitel", null, null, kapitel));
+      setNavState(() => makeState({ view: "kapitel", selectedKapitel: kapitel }));
    }, []);
 
    const navigateToSchlagwort = useCallback((schlagwort) => {
-      setNavState(() => makeState("schlagworte", null, null, null, schlagwort));
+      setNavState(() => makeState({ view: "schlagworte", selectedSchlagwort: schlagwort }));
    }, []);
 
    // Tab switch: replaceState (no history pollution)
    const setView = useCallback((key) => {
       setNavState((prev) => {
-         const next = makeState(key, prev.themaIdx, prev.orgNr, prev.selectedKapitel, prev.selectedSchlagwort);
+         const next = makeState({ view: key, themaIdx: prev.themaIdx, orgNr: prev.orgNr, selectedKapitel: prev.selectedKapitel, selectedSchlagwort: prev.selectedSchlagwort });
          window.history.replaceState(next, "");
          skipPushRef.current = true;
          return next;
@@ -93,7 +93,7 @@ export default function MainView({ organisationen, themen }) {
    // In-view selection: replaceState (no new history entry)
    const selectThemaIdx = useCallback((idx) => {
       setNavState((prev) => {
-         const next = makeState("themen", idx, prev.orgNr, prev.selectedKapitel, prev.selectedSchlagwort);
+         const next = makeState({ view: "themen", themaIdx: idx, orgNr: prev.orgNr, selectedKapitel: prev.selectedKapitel, selectedSchlagwort: prev.selectedSchlagwort });
          window.history.replaceState(next, "");
          skipPushRef.current = true;
          return next;
@@ -102,7 +102,7 @@ export default function MainView({ organisationen, themen }) {
 
    const selectOrgNr = useCallback((nr) => {
       setNavState((prev) => {
-         const next = makeState("organisationen", prev.themaIdx, nr, prev.selectedKapitel, prev.selectedSchlagwort);
+         const next = makeState({ view: "organisationen", themaIdx: prev.themaIdx, orgNr: nr, selectedKapitel: prev.selectedKapitel, selectedSchlagwort: prev.selectedSchlagwort });
          window.history.replaceState(next, "");
          skipPushRef.current = true;
          return next;
@@ -111,7 +111,7 @@ export default function MainView({ organisationen, themen }) {
 
    const selectKapitel = useCallback((kapitel) => {
       setNavState((prev) => {
-         const next = makeState("kapitel", prev.themaIdx, prev.orgNr, kapitel, prev.selectedSchlagwort);
+         const next = makeState({ view: "kapitel", themaIdx: prev.themaIdx, orgNr: prev.orgNr, selectedKapitel: kapitel, selectedSchlagwort: prev.selectedSchlagwort });
          window.history.replaceState(next, "");
          skipPushRef.current = true;
          return next;
@@ -120,7 +120,7 @@ export default function MainView({ organisationen, themen }) {
 
    const selectSchlagwort = useCallback((schlagwort) => {
       setNavState((prev) => {
-         const next = makeState("schlagworte", prev.themaIdx, prev.orgNr, prev.selectedKapitel, schlagwort);
+         const next = makeState({ view: "schlagworte", themaIdx: prev.themaIdx, orgNr: prev.orgNr, selectedKapitel: prev.selectedKapitel, selectedSchlagwort: schlagwort });
          window.history.replaceState(next, "");
          skipPushRef.current = true;
          return next;
@@ -199,16 +199,15 @@ export default function MainView({ organisationen, themen }) {
             {navState.view === "kapitel" && (
                <KapitelView
                   organisationen={organisationen}
-                  orgMap={orgMap}
                   selectedKapitel={navState.selectedKapitel}
                   onSelectKapitel={selectKapitel}
                   onNavigateToOrg={navigateToOrg}
+                  onNavigateToSchlagwort={navigateToSchlagwort}
                />
             )}
             {navState.view === "schlagworte" && (
                <SchlagworteView
                   organisationen={organisationen}
-                  orgMap={orgMap}
                   selectedSchlagwort={navState.selectedSchlagwort}
                   onSelectSchlagwort={selectSchlagwort}
                   onNavigateToOrg={navigateToOrg}

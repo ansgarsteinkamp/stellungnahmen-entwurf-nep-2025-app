@@ -96,13 +96,7 @@ export default function Dashboard({ themen, organisationen, orgMap, onNavigateTo
             chapterCounts[s.kapitel] = (chapterCounts[s.kapitel] || 0) + 1;
          }
       }
-      const chapters = Object.entries(chapterCounts)
-         .sort((a, b) => {
-            const ai = KAPITEL_ORDER.indexOf(a[0]);
-            const bi = KAPITEL_ORDER.indexOf(b[0]);
-            return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
-         })
-         .map(([kapitel, count]) => ({ kapitel, count }));
+      const chapters = KAPITEL_ORDER.map(kapitel => ({ kapitel, count: chapterCounts[kapitel] || 0 }));
       const chaptersMax = Math.max(...chapters.map(c => c.count));
 
       const swCounts = {};
@@ -159,8 +153,8 @@ export default function Dashboard({ themen, organisationen, orgMap, onNavigateTo
                   </ChartSection>
                </div>
 
-               <ChartSection title="Thematische Ähnlichkeit">
-                  <p className="text-2xs text-muted-foreground/60 -mt-2 mb-4">Organisationen mit ähnlichen Themen-Profilen werden durch Kanten verbunden. Je dicker die Verbindung, desto höher die Übereinstimmung.</p>
+               <ChartSection title="Themen-Überlappung">
+                  <p className="text-2xs text-muted-foreground/60 -mt-2 mb-4">Organisationen, die zu den gleichen Themen Stellung genommen haben, werden durch Kanten verbunden — das zeigt thematische Überschneidung, nicht inhaltliche Übereinstimmung. Je dicker die Verbindung, desto höher die Überlappung. Größere Kreise kennzeichnen Organisationen mit mehr Themen. Der Schwellenwert steuert, ab welcher Überlappung Verbindungen angezeigt werden. Kreise lassen sich per Drag verschieben, um Cluster freizulegen. Klick auf einen Kreis öffnet die Organisationsansicht.</p>
                   <NetworkGraph organisationen={organisationen} themen={themen} orgMap={orgMap} onNavigateToOrg={onNavigateToOrg} />
                </ChartSection>
 

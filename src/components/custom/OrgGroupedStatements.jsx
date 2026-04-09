@@ -1,7 +1,7 @@
 import { ChevronRight, ChevronDown, ArrowRight } from "lucide-react";
 import { getStatementText } from "@/lib/helpers";
 
-export default function OrgGroupedStatements({ groups, expandedStatements, onToggleStatement, onNavigateToOrg }) {
+export default function OrgGroupedStatements({ groups, expandedStatements, onToggleStatement, onNavigateToOrg, onNavigateToKapitel, onNavigateToSchlagwort }) {
    return (
       <div className="space-y-6">
          {groups.map(({ org, statements }) => (
@@ -26,7 +26,11 @@ export default function OrgGroupedStatements({ groups, expandedStatements, onTog
                         <div key={id} className="rounded-lg border border-border/60 overflow-hidden">
                            <button onClick={() => onToggleStatement(id)} className="w-full flex items-center gap-2 px-3 py-2.5 text-left hover:bg-accent/50 transition-colors">
                               {isExpanded ? <ChevronDown className="size-3.5 text-muted-foreground shrink-0" /> : <ChevronRight className="size-3.5 text-muted-foreground shrink-0" />}
-                              <span className="text-xs font-medium text-primary truncate">{s.kapitel}</span>
+                              {onNavigateToKapitel ? (
+                                 <span onClick={(e) => { e.stopPropagation(); onNavigateToKapitel(s.kapitel); }} className="text-xs font-medium text-primary truncate hover:underline cursor-pointer">{s.kapitel}</span>
+                              ) : (
+                                 <span className="text-xs font-medium text-primary truncate">{s.kapitel}</span>
+                              )}
                               {s.schlagworte.length > 0 && <span className="text-xs text-foreground/40 truncate ml-auto shrink-0 max-w-48">{s.schlagworte.join(", ")}</span>}
                               {"dokument" in s && <span className="text-3xs uppercase text-muted-foreground bg-accent px-1 py-0.5 rounded shrink-0">PDF</span>}
                            </button>
@@ -34,7 +38,15 @@ export default function OrgGroupedStatements({ groups, expandedStatements, onTog
                               <div className="px-3 pb-3 pt-2 border-t border-border/40">
                                  {s.schlagworte.length > 0 && (
                                     <div className="flex flex-wrap gap-1 mb-3">
-                                       {s.schlagworte.map(sw => (
+                                       {s.schlagworte.map(sw => onNavigateToSchlagwort ? (
+                                          <button
+                                             key={sw}
+                                             onClick={() => onNavigateToSchlagwort(sw)}
+                                             className="px-1.5 py-0.5 text-3xs bg-primary/10 text-primary rounded hover:bg-primary/20 transition-colors"
+                                          >
+                                             {sw}
+                                          </button>
+                                       ) : (
                                           <span
                                              key={sw}
                                              className="px-1.5 py-0.5 text-3xs bg-primary/10 text-primary rounded"

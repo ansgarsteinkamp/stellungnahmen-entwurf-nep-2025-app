@@ -4,7 +4,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { KAPITEL_ORDER } from "@/lib/helpers";
 import OrgGroupedStatements from "@/components/custom/OrgGroupedStatements";
 
-export default function KapitelView({ organisationen, orgMap, selectedKapitel, onSelectKapitel, onNavigateToOrg }) {
+export default function KapitelView({ organisationen, selectedKapitel, onSelectKapitel, onNavigateToOrg, onNavigateToSchlagwort }) {
    const [expandedStatements, setExpandedStatements] = useState(new Set());
    const detailRef = useRef(null);
 
@@ -59,6 +59,7 @@ export default function KapitelView({ organisationen, orgMap, selectedKapitel, o
          <div className="w-80 lg:w-[420px] xl:w-[480px] border-r border-border flex flex-col shrink-0 overflow-hidden">
             <div className="flex-1 min-h-0">
                <ScrollArea className="h-full">
+                  <div className="pt-2">
                   {chapterData.map(c => (
                      <button
                         key={c.kapitel}
@@ -74,6 +75,7 @@ export default function KapitelView({ organisationen, orgMap, selectedKapitel, o
                         </div>
                      </button>
                   ))}
+                  </div>
                </ScrollArea>
             </div>
          </div>
@@ -93,6 +95,7 @@ export default function KapitelView({ organisationen, orgMap, selectedKapitel, o
                         expandedStatements={expandedStatements}
                         onToggleStatement={toggleStatement}
                         onNavigateToOrg={onNavigateToOrg}
+                        onNavigateToSchlagwort={onNavigateToSchlagwort}
                      />
                   </div>
                </div>

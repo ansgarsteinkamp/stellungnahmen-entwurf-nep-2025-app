@@ -5,7 +5,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import SearchInput from "@/components/custom/SearchInput";
 import OrgGroupedStatements from "@/components/custom/OrgGroupedStatements";
 
-export default function SchlagworteView({ organisationen, orgMap, selectedSchlagwort, onSelectSchlagwort, onNavigateToOrg }) {
+export default function SchlagworteView({ organisationen, selectedSchlagwort, onSelectSchlagwort, onNavigateToOrg }) {
    const [search, setSearch] = useState("");
    const [sortBy, setSortBy] = useState("count");
    const [expandedStatements, setExpandedStatements] = useState(new Set());
@@ -61,9 +61,10 @@ export default function SchlagworteView({ organisationen, orgMap, selectedSchlag
       if (viewport) viewport.scrollTop = 0;
    }, [selectedSchlagwort]);
 
-   // Auto-select first schlagwort if none selected
+   // Auto-select first schlagwort if none selected or no longer in filtered list
    useEffect(() => {
-      if (selectedSchlagwort === null && filtered.length > 0) {
+      if (filtered.length === 0) return;
+      if (selectedSchlagwort === null || !filtered.some(s => s.schlagwort === selectedSchlagwort)) {
          onSelectSchlagwort(filtered[0].schlagwort);
       }
    }, [selectedSchlagwort, filtered, onSelectSchlagwort]);
