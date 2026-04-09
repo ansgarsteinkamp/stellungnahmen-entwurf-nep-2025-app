@@ -1,3 +1,18 @@
+export const KAPITEL_ORDER = [
+   "Executive Summary",
+   "Kapitel 1: Einführung",
+   "Kapitel 2: Genehmigter Szenariorahmen",
+   "Kapitel 3: Rahmenbedingungen und Eingangsgrößen der Modellierung",
+   "Kapitel 4: Stand der Umsetzung von Netzausbaumaßnahmen",
+   "Kapitel 5: Versorgungssicherheitsbetrachtung für Methan 2030",
+   "Kapitel 6: Szenarienbasierte Modellierungen für 2037 und 2045",
+   "Kapitel 7: Netzausbauvorschlag",
+   "Kapitel 8: Schlusswort und Ausblick",
+   "Anhänge und Anlagen",
+   "Generelle Anmerkungen",
+   "NEP-Gas-Datenbank",
+];
+
 export function buildOrgMap(organisationen) {
    const map = new Map();
    for (const org of organisationen) {

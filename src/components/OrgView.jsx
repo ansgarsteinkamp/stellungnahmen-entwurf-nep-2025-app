@@ -3,22 +3,7 @@ import { ChevronRight, ChevronDown, ArrowRight, ArrowDownAZ, ArrowDownWideNarrow
 import { cn } from "@/lib/utils";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import SearchInput from "@/components/custom/SearchInput";
-import { getStatementText } from "@/lib/helpers";
-
-const KAPITEL_ORDER = [
-   "Executive Summary",
-   "Kapitel 1: Einführung",
-   "Kapitel 2: Genehmigter Szenariorahmen",
-   "Kapitel 3: Rahmenbedingungen und Eingangsgrößen der Modellierung",
-   "Kapitel 4: Stand der Umsetzung von Netzausbaumaßnahmen",
-   "Kapitel 5: Versorgungssicherheitsbetrachtung für Methan 2030",
-   "Kapitel 6: Szenarienbasierte Modellierungen für 2037 und 2045",
-   "Kapitel 7: Netzausbauvorschlag",
-   "Kapitel 8: Schlusswort und Ausblick",
-   "Anhänge und Anlagen",
-   "Generelle Anmerkungen",
-   "NEP-Gas-Datenbank",
-];
+import { KAPITEL_ORDER, getStatementText } from "@/lib/helpers";
 
 export default function OrgView({ organisationen, themen, orgMap, selectedNr, onSelectNr, onNavigateToThema }) {
    const [search, setSearch] = useState("");

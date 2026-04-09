@@ -3,6 +3,8 @@ import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipContainer, TooltipProvider } from "@/components/ui/tooltip";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { KAPITEL_ORDER } from "@/lib/helpers";
+import NetworkGraph from "@/components/viz/NetworkGraph";
 
 function StatCard({ label, value, subtitle }) {
    return (
@@ -59,22 +61,7 @@ function ChartSection({ title, children }) {
    );
 }
 
-const KAPITEL_ORDER = [
-   "Executive Summary",
-   "Kapitel 1: Einführung",
-   "Kapitel 2: Genehmigter Szenariorahmen",
-   "Kapitel 3: Rahmenbedingungen und Eingangsgrößen der Modellierung",
-   "Kapitel 4: Stand der Umsetzung von Netzausbaumaßnahmen",
-   "Kapitel 5: Versorgungssicherheitsbetrachtung für Methan 2030",
-   "Kapitel 6: Szenarienbasierte Modellierungen für 2037 und 2045",
-   "Kapitel 7: Netzausbauvorschlag",
-   "Kapitel 8: Schlusswort und Ausblick",
-   "Anhänge und Anlagen",
-   "Generelle Anmerkungen",
-   "NEP-Gas-Datenbank",
-];
-
-export default function Dashboard({ themen, organisationen, orgMap, onNavigateToThema, onNavigateToOrg }) {
+export default function Dashboard({ themen, organisationen, orgMap, onNavigateToThema, onNavigateToOrg, onNavigateToKapitel, onNavigateToSchlagwort }) {
    const stats = useMemo(() => {
       const avgOrgsPerThema = (themen.reduce((s, t) => s + t.organisationen.length, 0) / themen.length).toFixed(1);
 
@@ -161,16 +148,22 @@ export default function Dashboard({ themen, organisationen, orgMap, onNavigateTo
                <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-8">
                   <ChartSection title="Stellungnahmen pro Kapitel">
                      {stats.chapters.map(c => (
-                        <BarRow key={c.kapitel} label={c.kapitel} value={c.count} max={stats.chaptersMax} suffix=" Einr." labelTooltip={false} valueTooltip={`${c.count} Stellungnahme${c.count !== 1 ? "n" : ""}`} />
+                        <BarRow key={c.kapitel} label={c.kapitel} value={c.count} max={stats.chaptersMax} suffix=" Einr." onClick={() => onNavigateToKapitel(c.kapitel)} labelTooltip={false} valueTooltip={`${c.count} Stellungnahme${c.count !== 1 ? "n" : ""}`} />
                      ))}
                   </ChartSection>
 
-                  <ChartSection title="Top 10 — Häufig verwendete Schlagworte">
+                  <ChartSection title="Top 10 — Häufig ausgewählte Schlagworte">
                      {stats.topSchlagworte.map(s => (
-                        <BarRow key={s.sw} label={s.sw} value={s.count} max={stats.topSchlagworte[0]?.count || 1} suffix=" Nenn." valueTooltip={`${s.count} Nennung${s.count !== 1 ? "en" : ""}`} />
+                        <BarRow key={s.sw} label={s.sw} value={s.count} max={stats.topSchlagworte[0]?.count || 1} suffix=" Nenn." onClick={() => onNavigateToSchlagwort(s.sw)} valueTooltip={`${s.count} Nennung${s.count !== 1 ? "en" : ""}`} />
                      ))}
                   </ChartSection>
                </div>
+
+               <ChartSection title="Thematische Ähnlichkeit">
+                  <p className="text-2xs text-muted-foreground/60 -mt-2 mb-4">Organisationen mit ähnlichen Themen-Profilen werden durch Kanten verbunden. Je dicker die Verbindung, desto höher die Übereinstimmung.</p>
+                  <NetworkGraph organisationen={organisationen} themen={themen} orgMap={orgMap} onNavigateToOrg={onNavigateToOrg} />
+               </ChartSection>
+
             </div>
          </div>
          </ScrollArea>

@@ -1,4 +1,4 @@
-import { useState, useMemo, useDeferredValue, useEffect } from "react";
+import { useState, useMemo, useDeferredValue } from "react";
 import { ArrowRight, ChevronDown, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import SearchInput from "@/components/custom/SearchInput";
@@ -18,18 +18,10 @@ function Highlight({ parts }) {
    );
 }
 
-export default function SucheView({ themen, organisationen, orgMap, onNavigateToThema, onNavigateToOrg, initialQuery }) {
+export default function SucheView({ themen, organisationen, orgMap, onNavigateToThema, onNavigateToOrg }) {
    const [query, setQuery] = useState("");
    const deferredQuery = useDeferredValue(query);
    const [expandedStatements, setExpandedStatements] = useState(new Set());
-
-   // Sync initial query from navigation (e.g. Schlagwort click)
-   useEffect(() => {
-      if (initialQuery) {
-         setQuery(initialQuery);
-         setExpandedStatements(new Set());
-      }
-   }, [initialQuery]);
 
    const toggleStatement = (id) =>
       setExpandedStatements((prev) => {
