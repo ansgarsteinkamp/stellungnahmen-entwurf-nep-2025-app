@@ -86,7 +86,14 @@ export default function KapitelView({ organisationen, selectedKapitel, onSelectK
                <div className="p-6 lg:p-8">
                   <h1 className="text-xl font-medium text-foreground leading-snug">{selectedKapitel}</h1>
                   <div className="mt-1 text-sm text-primary">
-                     {statementCount} Stellungnahme{statementCount !== 1 && "n"} von {orgCount} Organisation{orgCount !== 1 && "en"}
+                     {statementCount} Stellungnahme{statementCount !== 1 && "n"}
+                  </div>
+
+                  <div className="mt-5">
+                     <h2 className="text-xs font-medium uppercase tracking-wider text-muted-foreground mb-2">Hinweis zu den ungekürzten Stellungnahmen zu diesem Kapitel</h2>
+                     <p className="text-sm text-foreground/80 leading-relaxed">
+                        Die Zuordnung der Stellungnahmen zu den Kapiteln des NEP-Entwurfs basiert auf der Angabe der einreichenden Organisation im Konsultationsformular. Da die Zuordnung zu einzelnen Kapiteln nicht immer trennscharf möglich ist, können die Kapitel-Stellungnahmen Inhalte enthalten, die auch andere Kapitel betreffen. Die Textfelder des Formulars waren zudem pro Kapitel zeichenbegrenzt, sodass manche Organisationen Inhalte auf Felder anderer Kapitel verteilt haben. Stellungnahmen, die nachträglich als PDF eingereicht wurden, sind pauschal dem Kapitel „Generelle Anmerkungen" zugeordnet, unabhängig von ihrem tatsächlichen Inhalt. Die angezeigte Kapitelzuordnung kann daher vom tatsächlichen thematischen Bezug abweichen.
+                     </p>
                   </div>
 
                   <div className="mt-5">

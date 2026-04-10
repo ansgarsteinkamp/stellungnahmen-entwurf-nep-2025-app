@@ -119,7 +119,14 @@ export default function SchlagworteView({ organisationen, selectedSchlagwort, on
                <div className="p-6 lg:p-8">
                   <h1 className="text-xl font-medium text-foreground leading-snug">{selectedSchlagwort}</h1>
                   <div className="mt-1 text-sm text-primary">
-                     {statementCount} Stellungnahme{statementCount !== 1 && "n"} von {orgCount} Organisation{orgCount !== 1 && "en"}
+                     {statementCount} Stellungnahme{statementCount !== 1 && "n"}
+                  </div>
+
+                  <div className="mt-5">
+                     <h2 className="text-xs font-medium uppercase tracking-wider text-muted-foreground mb-2">Hinweis zu den ungekürzten Stellungnahmen zu diesem Schlagwort</h2>
+                     <p className="text-sm text-foreground/80 leading-relaxed">
+                        Die Zuordnung der Schlagwörter zu Kapitel-Stellungnahmen basiert auf der Auswahl der einreichenden Organisation im Konsultationsformular. Pro Kapitel stand eine vordefinierte Liste von Schlagwörtern zur Verfügung, aus der frei gewählt werden konnte. Da die verfügbaren Schlagwörter kapitelabhängig waren, wirken sich Ungenauigkeiten in der Kapitelzuordnung auch auf die Schlagwortzuordnung aus. Stellungnahmen, die nachträglich als PDF eingereicht wurden, tragen zudem keine Schlagwörter. Die angezeigte Schlagwortzuordnung kann daher vom tatsächlichen thematischen Bezug abweichen.
+                     </p>
                   </div>
 
                   <div className="mt-5">
