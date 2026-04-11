@@ -1,23 +1,7 @@
 {
    "permissions": {
       "defaultMode": "acceptEdits",
-      "allow": [
-         "Bash(*)",
-         "Read",
-         "Edit",
-         "WebFetch",
-         "WebSearch"
-      ],
-      "deny": [
-         "Bash(rm -rf *)",
-         "Bash(git push*)",
-         "Bash(git pull*)",
-         "Bash(git commit*)",
-         "Bash(git rebase*)",
-         "Bash(git reset*)",
-         "Bash(git merge*)",
-         "Bash(git cherry-pick*)",
-         "Bash(git checkout *)"
-      ]
+      "allow": ["Bash(*)", "Read", "Edit", "WebFetch", "WebSearch"],
+      "deny": ["Bash(rm -rf *)", "Bash(git push*)", "Bash(git pull*)", "Bash(git rebase*)", "Bash(git reset*)", "Bash(git merge*)", "Bash(git cherry-pick*)", "Bash(git checkout *)"]
    }
 }
