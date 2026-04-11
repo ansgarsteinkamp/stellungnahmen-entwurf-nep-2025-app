@@ -18,7 +18,7 @@ function Highlight({ parts }) {
    );
 }
 
-export default function SucheView({ themen, organisationen, orgMap, onNavigateToThema, onNavigateToOrg }) {
+export default function SucheView({ organisationen, onNavigateToOrg, onNavigateToSchlagwort }) {
    const [query, setQuery] = useState("");
    const deferredQuery = useDeferredValue(query);
    const [expandedStatements, setExpandedStatements] = useState(new Set());
@@ -110,7 +110,7 @@ export default function SucheView({ themen, organisationen, orgMap, onNavigateTo
                                           {r.statement.schlagworte.map((sw) => (
                                              <button
                                                 key={sw}
-                                                onClick={() => setQuery(sw)}
+                                                onClick={() => onNavigateToSchlagwort(sw)}
                                                 className="px-1.5 py-0.5 text-3xs bg-primary/10 text-primary rounded hover:bg-primary/20 transition-colors"
                                              >
                                                 {sw}

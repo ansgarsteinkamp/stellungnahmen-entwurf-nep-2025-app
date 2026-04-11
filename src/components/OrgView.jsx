@@ -5,7 +5,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import SearchInput from "@/components/custom/SearchInput";
 import { getStatementText } from "@/lib/helpers";
 
-export default function OrgView({ organisationen, themen, kapitel, orgMap, selectedNr, onSelectNr, onNavigateToThema, onNavigateToKapitel }) {
+export default function OrgView({ organisationen, themen, kapitel, orgMap, selectedNr, onSelectNr, onNavigateToThema, onNavigateToKapitel, onNavigateToSchlagwort }) {
    const kapitelOrder = useMemo(() => kapitel.map(k => k.kapitel), [kapitel]);
 
    const [search, setSearch] = useState("");
@@ -159,12 +159,13 @@ export default function OrgView({ organisationen, themen, kapitel, orgMap, selec
                                        {s.schlagworte.length > 0 && (
                                           <div className="flex flex-wrap gap-1 mb-3">
                                              {s.schlagworte.map(sw => (
-                                                <span
+                                                <button
                                                    key={sw}
-                                                   className="px-1.5 py-0.5 text-3xs bg-primary/10 text-primary rounded"
+                                                   onClick={() => onNavigateToSchlagwort(sw)}
+                                                   className="px-1.5 py-0.5 text-3xs bg-primary/10 text-primary rounded hover:bg-primary/20 transition-colors"
                                                 >
                                                    {sw}
-                                                </span>
+                                                </button>
                                              ))}
                                           </div>
                                        )}

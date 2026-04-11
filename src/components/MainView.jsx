@@ -197,6 +197,7 @@ export default function MainView({ organisationen, themen, kapitel }) {
                   onSelectNr={selectOrgNr}
                   onNavigateToThema={navigateToThema}
                   onNavigateToKapitel={navigateToKapitel}
+                  onNavigateToSchlagwort={navigateToSchlagwort}
                />
             )}
             {navState.view === "kapitel" && (
@@ -220,11 +221,9 @@ export default function MainView({ organisationen, themen, kapitel }) {
             )}
             {navState.view === "suche" && (
                <SucheView
-                  themen={themen}
                   organisationen={organisationen}
-                  orgMap={orgMap}
-                  onNavigateToThema={navigateToThema}
                   onNavigateToOrg={navigateToOrg}
+                  onNavigateToSchlagwort={navigateToSchlagwort}
                />
             )}
          </main>
