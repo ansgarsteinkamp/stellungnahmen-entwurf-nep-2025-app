@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Was die App macht
 
-Eine clientseitige React-App zur Auswertung der öffentlichen Stellungnahmen zum Entwurf des Netzentwicklungsplans (NEP) Gas und Wasserstoff 2025. Nutzer laden eine `quelldaten.json`-Datei per Drag-and-Drop im Browser — alle Daten werden lokal verarbeitet, kein Upload. Die App bietet vier Hauptansichten: Übersicht (Dashboard), Themen, Organisationen und Suche.
+Eine clientseitige React-App zur Auswertung der öffentlichen Stellungnahmen zum Entwurf des Netzentwicklungsplans (NEP) Gas und Wasserstoff 2025. Nutzer laden eine `quelldaten.json`-Datei per Drag-and-Drop im Browser — alle Daten werden lokal verarbeitet, kein Upload. Die App bietet sechs Hauptansichten: Übersicht (Dashboard), Themen, Kapitel, Schlagworte, Organisationen und Suche.
 
 ## Befehle
 
@@ -29,12 +29,16 @@ Kein Test-Runner oder Linter konfiguriert.
 
 - `src/App.jsx` — Root-Komponente. Hält das geparste JSON im State. Zeigt `Dropzone` bis Daten geladen sind, dann `MainView`.
 - `src/components/Dropzone.jsx` — Datei-Dropzone mit `react-dropzone`. Akzeptiert eine einzelne `.json`-Datei, parst sie, validiert die Top-Level-Struktur (`organisationen` + `themen` müssen vorhanden sein) und gibt die Daten über `onDataLoaded` nach oben.
-- `src/components/MainView.jsx` — Zentrale Ansicht mit Tab-Navigation (Übersicht, Themen, Organisationen, Suche). Verwaltet den Navigations-State und die Browser-History.
+- `src/components/MainView.jsx` — Zentrale Ansicht mit Tab-Navigation (Übersicht, Themen, Kapitel, Schlagworte, Organisationen, Suche). Verwaltet den Navigations-State und die Browser-History.
 - `src/components/Dashboard.jsx` — Übersichtsseite mit Kennzahlen und Einstiegspunkten.
 - `src/components/ThemenView.jsx` — Master-Detail-Ansicht der thematischen Cluster.
+- `src/components/KapitelView.jsx` — Ansicht gruppiert nach NEP-Kapiteln.
+- `src/components/SchlagworteView.jsx` — Ansicht über die Schlagwort-Facetten der Stellungnahmen.
 - `src/components/OrgView.jsx` — Ansicht der Organisationen mit Zusammenfassungen und Einzelstellungnahmen.
 - `src/components/SucheView.jsx` — Volltextsuche über Themen, Organisationen und Stellungnahmen.
+- `src/components/viz/NetworkGraph.jsx` — Netzwerk-Visualisierung der Beziehungen zwischen Themen/Organisationen.
 - `src/lib/helpers.js` — Hilfsfunktionen (OrgMap-Aufbau, Textextraktion, Highlighting).
+- `src/lib/similarity.js` — Ähnlichkeitsberechnung (z.B. für Themen-/Organisationsverknüpfungen im NetworkGraph).
 - `src/components/ui/` — shadcn/ui-Primitives (wird laufend erweitert).
 - `src/components/custom/` — Projektspezifische Komponenten (z.B. SearchInput).
 
