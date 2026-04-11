@@ -355,7 +355,7 @@ export default function NetworkGraph({
       <div className="relative">
          <div className="flex items-center gap-4 mb-4">
             <span className="text-xs text-muted-foreground whitespace-nowrap">
-               Jaccard-Schwellenwert: {Math.round(threshold * 100)}% ({links.length} Verbindungen)
+               Jaccard-Schwellenwert: {Math.round(threshold * 100)}%
             </span>
             <Slider
                min={5}
@@ -394,7 +394,7 @@ export default function NetworkGraph({
             >
                <div className="font-medium">{hover.edge.sourceLabel} — {hover.edge.targetLabel}</div>
                <div className="text-muted-foreground mt-0.5">
-                  Jaccard: {Math.round(hover.edge.similarity * 100)}% · {hover.edge.sharedThemes.length} {hover.edge.sharedThemes.length !== 1 ? "gemeinsame Themen" : "gemeinsames Thema"}
+                  {hover.edge.sharedThemes.length} {hover.edge.sharedThemes.length !== 1 ? "gemeinsame Themen" : "gemeinsames Thema"} (Jaccard-Koeffizient: {Math.round(hover.edge.similarity * 100)}%)
                </div>
                {hover.edge.sharedThemes.length > 0 && (
                   <ul className="mt-1.5 space-y-0.5 text-muted-foreground">
