@@ -28,8 +28,13 @@ const Dropzone = ({ onDataLoaded }) => {
       reader.onload = e => {
          try {
             const parsed = JSON.parse(e.target.result);
-            if (!parsed.organisationen || !parsed.themen) {
+            if (!Array.isArray(parsed?.organisationen) || !Array.isArray(parsed?.themen)) {
                setError("Die Datei enthält nicht die erwartete Struktur.");
+               setIsParsing(false);
+               return;
+            }
+            if (!Array.isArray(parsed.kapitel)) {
+               setError("Die Datei quelldaten.json ist veraltet, bitte die neue Version quelldaten_v2.json verwenden.");
                setIsParsing(false);
                return;
             }

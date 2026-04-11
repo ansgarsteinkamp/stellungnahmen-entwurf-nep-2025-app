@@ -1,7 +1,7 @@
 import { useState, useMemo, useCallback, useEffect, useRef } from "react";
 import { BarChart3, List, Building2, BookOpen, Tags, Search } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { buildOrgMap, KAPITEL_ORDER } from "@/lib/helpers";
+import { buildOrgMap } from "@/lib/helpers";
 import Dashboard from "@/components/Dashboard";
 import ThemenView from "@/components/ThemenView";
 import OrgView from "@/components/OrgView";
@@ -24,11 +24,12 @@ function makeState({ view, themaIdx = null, orgNr = null, selectedKapitel = null
    return { _nav: NAV_KEY, view, themaIdx, orgNr, selectedKapitel, selectedSchlagwort };
 }
 
-export default function MainView({ organisationen, themen }) {
+export default function MainView({ organisationen, themen, kapitel }) {
    const [navState, setNavState] = useState(() => makeState({ view: "dashboard" }));
    const skipPushRef = useRef(false);
 
    const orgMap = useMemo(() => buildOrgMap(organisationen), [organisationen]);
+   const kapitelOrder = useMemo(() => kapitel.map(k => k.kapitel), [kapitel]);
 
    const uniqueSchlagworteCount = useMemo(() => {
       const set = new Set();
@@ -154,7 +155,7 @@ export default function MainView({ organisationen, themen }) {
                            <span className="text-2xs sm:text-xs text-muted-foreground ml-0.5">({organisationen.length})</span>
                         )}
                         {t.key === "kapitel" && (
-                           <span className="text-2xs sm:text-xs text-muted-foreground ml-0.5">({KAPITEL_ORDER.length})</span>
+                           <span className="text-2xs sm:text-xs text-muted-foreground ml-0.5">({kapitel.length})</span>
                         )}
                         {t.key === "schlagworte" && (
                            <span className="text-2xs sm:text-xs text-muted-foreground ml-0.5">({uniqueSchlagworteCount})</span>
@@ -171,6 +172,7 @@ export default function MainView({ organisationen, themen }) {
                   themen={themen}
                   organisationen={organisationen}
                   orgMap={orgMap}
+                  kapitelOrder={kapitelOrder}
                   onNavigateToThema={navigateToThema}
                   onNavigateToOrg={navigateToOrg}
                   onNavigateToKapitel={navigateToKapitel}
@@ -191,6 +193,7 @@ export default function MainView({ organisationen, themen }) {
                   organisationen={organisationen}
                   themen={themen}
                   orgMap={orgMap}
+                  kapitelOrder={kapitelOrder}
                   selectedNr={navState.orgNr}
                   onSelectNr={selectOrgNr}
                   onNavigateToThema={navigateToThema}
@@ -199,6 +202,8 @@ export default function MainView({ organisationen, themen }) {
             {navState.view === "kapitel" && (
                <KapitelView
                   organisationen={organisationen}
+                  kapitel={kapitel}
+                  orgMap={orgMap}
                   selectedKapitel={navState.selectedKapitel}
                   onSelectKapitel={selectKapitel}
                   onNavigateToOrg={navigateToOrg}

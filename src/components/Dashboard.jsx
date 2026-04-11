@@ -3,7 +3,6 @@ import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipContainer, TooltipProvider } from "@/components/ui/tooltip";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { KAPITEL_ORDER } from "@/lib/helpers";
 import NetworkGraph from "@/components/viz/NetworkGraph";
 
 function StatCard({ label, value, subtitle }) {
@@ -61,7 +60,7 @@ function ChartSection({ title, children }) {
    );
 }
 
-export default function Dashboard({ themen, organisationen, orgMap, onNavigateToThema, onNavigateToOrg, onNavigateToKapitel, onNavigateToSchlagwort }) {
+export default function Dashboard({ themen, organisationen, orgMap, kapitelOrder, onNavigateToThema, onNavigateToOrg, onNavigateToKapitel, onNavigateToSchlagwort }) {
    const stats = useMemo(() => {
       const avgOrgsPerThema = (themen.reduce((s, t) => s + t.organisationen.length, 0) / themen.length).toFixed(1);
 
@@ -96,7 +95,7 @@ export default function Dashboard({ themen, organisationen, orgMap, onNavigateTo
             chapterCounts[s.kapitel] = (chapterCounts[s.kapitel] || 0) + 1;
          }
       }
-      const chapters = KAPITEL_ORDER.map(kapitel => ({ kapitel, count: chapterCounts[kapitel] || 0 }));
+      const chapters = kapitelOrder.map(kapitel => ({ kapitel, count: chapterCounts[kapitel] || 0 }));
       const chaptersMax = Math.max(...chapters.map(c => c.count));
 
       const swCounts = {};
@@ -113,7 +112,7 @@ export default function Dashboard({ themen, organisationen, orgMap, onNavigateTo
          .map(([sw, count]) => ({ sw, count }));
 
       return { avgThemesPerOrg, avgOrgsPerThema, topThemen, topOrgs, chapters, chaptersMax, topSchlagworte };
-   }, [themen, organisationen, orgMap]);
+   }, [themen, organisationen, orgMap, kapitelOrder]);
 
    return (
       <TooltipProvider>

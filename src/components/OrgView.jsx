@@ -3,9 +3,9 @@ import { ChevronRight, ChevronDown, ArrowRight, ArrowDownAZ, ArrowDownWideNarrow
 import { cn } from "@/lib/utils";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import SearchInput from "@/components/custom/SearchInput";
-import { KAPITEL_ORDER, getStatementText } from "@/lib/helpers";
+import { getStatementText } from "@/lib/helpers";
 
-export default function OrgView({ organisationen, themen, orgMap, selectedNr, onSelectNr, onNavigateToThema }) {
+export default function OrgView({ organisationen, themen, orgMap, kapitelOrder, selectedNr, onSelectNr, onNavigateToThema }) {
    const [search, setSearch] = useState("");
    const [sortBy, setSortBy] = useState("alpha");
    const [expandedStatements, setExpandedStatements] = useState(new Set());
@@ -51,11 +51,11 @@ export default function OrgView({ organisationen, themen, orgMap, selectedNr, on
    const sortedStatements = useMemo(() => {
       if (!selectedOrg) return [];
       return [...selectedOrg.stellungnahmen].sort((a, b) => {
-         const ai = KAPITEL_ORDER.indexOf(a.kapitel);
-         const bi = KAPITEL_ORDER.indexOf(b.kapitel);
+         const ai = kapitelOrder.indexOf(a.kapitel);
+         const bi = kapitelOrder.indexOf(b.kapitel);
          return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
       });
-   }, [selectedOrg]);
+   }, [selectedOrg, kapitelOrder]);
 
    // Reset expanded statements, scroll, and theme collapse when selection changes
    useEffect(() => {

@@ -25,7 +25,7 @@ const App = () => {
          }}
          onReset={() => setData(null)}
       >
-         <MainView organisationen={data.organisationen} themen={data.themen} />
+         <MainView organisationen={data.organisationen} themen={data.themen} kapitel={data.kapitel} />
       </ErrorBoundary>
    );
 };
