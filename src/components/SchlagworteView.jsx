@@ -122,14 +122,13 @@ export default function SchlagworteView({ organisationen, selectedSchlagwort, on
                      {statementCount} Stellungnahme{statementCount !== 1 && "n"}
                   </div>
 
-                  <div className="mt-5">
-                     <h2 className="text-xs font-medium uppercase tracking-wider text-muted-foreground mb-2">Hinweis zu den nachfolgenden Stellungnahmen zu diesem Schlagwort</h2>
-                     <p className="text-sm text-foreground/80 leading-relaxed">
-                        Die Zuordnung der Schlagwörter zu Kapitel-Stellungnahmen basiert auf der Auswahl der einreichenden Organisation im Konsultationsformular. Pro Kapitel stand eine vordefinierte Liste von Schlagwörtern zur Verfügung, aus der frei gewählt werden konnte. Da die verfügbaren Schlagwörter kapitelabhängig waren, wirken sich Ungenauigkeiten in der Kapitelzuordnung auch auf die Schlagwortzuordnung aus. Stellungnahmen, die als PDF statt über das Online-Formular eingereicht wurden, tragen zudem keine Schlagwörter. Die angezeigte Schlagwortzuordnung kann daher vom tatsächlichen thematischen Bezug abweichen.
+                  <div className="mt-8">
+                     <h2 className="text-xs font-medium uppercase tracking-wider text-muted-foreground mb-3">
+                        Ungekürzte Stellungnahmen zu diesem Schlagwort
+                     </h2>
+                     <p className="text-xs text-muted-foreground leading-relaxed border-l-4 border-primary/40 pl-4 mb-5">
+                        <strong className="text-foreground">Hinweis:</strong> Die Schlagwortzuordnung basiert ausschließlich auf der Auswahl der einreichenden Organisation im Konsultationsformular: Pro Kapitel stand eine vordefinierte Liste von Schlagwörtern zur Verfügung, aus der frei gewählt werden konnte. Häufig haben Organisationen Inhalte allerdings auf andere Kapitelfelder verteilt, weil viele Themen mehrere Kapitel berühren und die Textfelder zeichenbegrenzt waren. Solche Beiträge tragen dann nur Schlagwörter dieses anderen Kapitels, nicht des inhaltlich passenden. Vier Organisationen haben zudem statt des Online-Formulars ein PDF-Dokument eingereicht; diese Stellungnahmen tragen keine Schlagwörter und tauchen in dieser Schlagwort-Sicht nicht auf, unabhängig davon, welche Themen sie inhaltlich berühren. Die angezeigte Schlagwortzuordnung kann daher vom tatsächlichen thematischen Bezug abweichen.
                      </p>
-                  </div>
-
-                  <div className="mt-5">
                      <OrgGroupedStatements
                         groups={groupedByOrg}
                         expandedStatements={expandedStatements}

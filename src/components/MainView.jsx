@@ -29,7 +29,6 @@ export default function MainView({ organisationen, themen, kapitel }) {
    const skipPushRef = useRef(false);
 
    const orgMap = useMemo(() => buildOrgMap(organisationen), [organisationen]);
-   const kapitelOrder = useMemo(() => kapitel.map(k => k.kapitel), [kapitel]);
 
    const uniqueSchlagworteCount = useMemo(() => {
       const set = new Set();
@@ -172,7 +171,7 @@ export default function MainView({ organisationen, themen, kapitel }) {
                   themen={themen}
                   organisationen={organisationen}
                   orgMap={orgMap}
-                  kapitelOrder={kapitelOrder}
+                  kapitel={kapitel}
                   onNavigateToThema={navigateToThema}
                   onNavigateToOrg={navigateToOrg}
                   onNavigateToKapitel={navigateToKapitel}
@@ -192,11 +191,12 @@ export default function MainView({ organisationen, themen, kapitel }) {
                <OrgView
                   organisationen={organisationen}
                   themen={themen}
+                  kapitel={kapitel}
                   orgMap={orgMap}
-                  kapitelOrder={kapitelOrder}
                   selectedNr={navState.orgNr}
                   onSelectNr={selectOrgNr}
                   onNavigateToThema={navigateToThema}
+                  onNavigateToKapitel={navigateToKapitel}
                />
             )}
             {navState.view === "kapitel" && (

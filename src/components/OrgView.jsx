@@ -5,7 +5,9 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import SearchInput from "@/components/custom/SearchInput";
 import { getStatementText } from "@/lib/helpers";
 
-export default function OrgView({ organisationen, themen, orgMap, kapitelOrder, selectedNr, onSelectNr, onNavigateToThema }) {
+export default function OrgView({ organisationen, themen, kapitel, orgMap, selectedNr, onSelectNr, onNavigateToThema, onNavigateToKapitel }) {
+   const kapitelOrder = useMemo(() => kapitel.map(k => k.kapitel), [kapitel]);
+
    const [search, setSearch] = useState("");
    const [sortBy, setSortBy] = useState("alpha");
    const [expandedStatements, setExpandedStatements] = useState(new Set());
@@ -47,6 +49,12 @@ export default function OrgView({ organisationen, themen, orgMap, kapitelOrder, 
       const nr = Number(selectedOrg.nr);
       return themen.map((t, i) => ({ ...t, _idx: i })).filter(t => t.organisationen.includes(nr));
    }, [selectedOrg, themen]);
+
+   const orgKapitel = useMemo(() => {
+      if (!selectedOrg) return [];
+      const nr = Number(selectedOrg.nr);
+      return kapitel.filter(k => k.organisationen.includes(nr));
+   }, [selectedOrg, kapitel]);
 
    const sortedStatements = useMemo(() => {
       if (!selectedOrg) return [];
@@ -174,6 +182,24 @@ export default function OrgView({ organisationen, themen, orgMap, kapitelOrder, 
                      <h2 className="text-xs font-medium uppercase tracking-wider text-muted-foreground mb-2">Zusammenfassung der Stellungnahmen</h2>
                      <p className="text-sm text-foreground/80 leading-relaxed whitespace-pre-line">{selectedOrg.zusammenfassung}</p>
                   </div>
+
+                  {/* Kapitel mit inhaltlicher Position */}
+                  {orgKapitel.length > 0 && (
+                     <div className="mt-8">
+                        <h2 className="text-xs font-medium uppercase tracking-wider text-muted-foreground mb-2">Kapitel, auf die sich die Stellungnahmen tatsächlich beziehen ({orgKapitel.length})</h2>
+                        <div className="flex flex-wrap gap-1.5">
+                           {orgKapitel.map(k => (
+                              <button
+                                 key={k.kapitel}
+                                 onClick={() => onNavigateToKapitel(k.kapitel)}
+                                 className="px-2 py-1 text-xs bg-accent hover:bg-primary/20 text-foreground/80 hover:text-foreground rounded transition-colors"
+                              >
+                                 {k.kapitel}
+                              </button>
+                           ))}
+                        </div>
+                     </div>
+                  )}
 
                   {/* Zugehörige Themen */}
                   {orgThemes.length > 0 && (

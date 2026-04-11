@@ -76,7 +76,7 @@ const Dropzone = ({ onDataLoaded }) => {
             <Icon className={cn("size-4 xs:size-4.5", !error && "text-muted-foreground/75", isParsing && "animate-spin")} />
 
             <div className="text-center space-y-1 xs:space-y-2">
-               <p className="font-medium">{error || "Datei hierher ziehen oder klicken"}</p>
+               <p className="font-medium">{error || "quelldaten_v2.json hierher ziehen oder klicken"}</p>
                <p className="text-2xs xs:text-xs text-muted-foreground/60 mt-1">Die Daten werden lokal im Browser verarbeitet, es findet kein Upload statt.</p>
             </div>
          </div>

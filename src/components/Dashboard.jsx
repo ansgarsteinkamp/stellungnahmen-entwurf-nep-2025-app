@@ -60,7 +60,7 @@ function ChartSection({ title, children }) {
    );
 }
 
-export default function Dashboard({ themen, organisationen, orgMap, kapitelOrder, onNavigateToThema, onNavigateToOrg, onNavigateToKapitel, onNavigateToSchlagwort }) {
+export default function Dashboard({ themen, organisationen, orgMap, kapitel, onNavigateToThema, onNavigateToOrg, onNavigateToKapitel, onNavigateToSchlagwort }) {
    const stats = useMemo(() => {
       const avgOrgsPerThema = (themen.reduce((s, t) => s + t.organisationen.length, 0) / themen.length).toFixed(1);
 
@@ -89,14 +89,8 @@ export default function Dashboard({ themen, organisationen, orgMap, kapitelOrder
             };
          });
 
-      const chapterCounts = {};
-      for (const org of organisationen) {
-         for (const s of org.stellungnahmen) {
-            chapterCounts[s.kapitel] = (chapterCounts[s.kapitel] || 0) + 1;
-         }
-      }
-      const chapters = kapitelOrder.map(kapitel => ({ kapitel, count: chapterCounts[kapitel] || 0 }));
-      const chaptersMax = Math.max(...chapters.map(c => c.count));
+      const chapters = kapitel.map(k => ({ kapitel: k.kapitel, count: k.organisationen.length }));
+      const chaptersMax = Math.max(1, ...chapters.map(c => c.count));
 
       const swCounts = {};
       for (const org of organisationen) {
@@ -112,7 +106,7 @@ export default function Dashboard({ themen, organisationen, orgMap, kapitelOrder
          .map(([sw, count]) => ({ sw, count }));
 
       return { avgThemesPerOrg, avgOrgsPerThema, topThemen, topOrgs, chapters, chaptersMax, topSchlagworte };
-   }, [themen, organisationen, orgMap, kapitelOrder]);
+   }, [themen, organisationen, orgMap, kapitel]);
 
    return (
       <TooltipProvider>
@@ -139,9 +133,9 @@ export default function Dashboard({ themen, organisationen, orgMap, kapitelOrder
                </div>
 
                <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-8">
-                  <ChartSection title="Stellungnahmen pro Kapitel">
+                  <ChartSection title="Resonanz pro Kapitel">
                      {stats.chapters.map(c => (
-                        <BarRow key={c.kapitel} label={c.kapitel} value={c.count} max={stats.chaptersMax} suffix=" Einr." onClick={() => onNavigateToKapitel(c.kapitel)} labelTooltip={false} valueTooltip={`${c.count} Stellungnahme${c.count !== 1 ? "n" : ""}`} />
+                        <BarRow key={c.kapitel} label={c.kapitel} value={c.count} max={stats.chaptersMax} onClick={() => onNavigateToKapitel(c.kapitel)} labelTooltip={false} valueTooltip={`${c.count} Organisation${c.count !== 1 ? "en" : ""} mit inhaltlicher Position`} />
                      ))}
                   </ChartSection>
 

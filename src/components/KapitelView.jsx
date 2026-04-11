@@ -131,19 +131,8 @@ export default function KapitelView({ organisationen, kapitel, orgMap, selectedK
                            <h2 className="text-xs font-medium uppercase tracking-wider text-muted-foreground mb-3">
                               Zusammenfassung der Stellungnahmen zu diesem Kapitel
                            </h2>
-                           <div className="text-xs text-muted-foreground leading-relaxed border-l-4 border-primary/40 pl-4 mb-5 space-y-1">
-                              <p>
-                                 <strong className="text-foreground">Hinweis:</strong> Die nachfolgende Zusammenfassung ist eine inhaltlich basierte, neu zugeordnete Sicht auf die Konsultation. Sie wurde aus den ungekürzten Original-Stellungnahmen <em>aller</em> Organisationen über <em>alle</em> Kapitelfelder hinweg erzeugt — einschließlich der vier per PDF eingereichten Stellungnahmen, die kein Kapitelfeld haben. Jede Position erscheint in derjenigen Kapitelzusammenfassung, zu der sie inhaltlich passt, unabhängig davon, in welchem Formularfeld sie ursprünglich eingetragen wurde.
-                              </p>
-                              <p>
-                                 Hintergrund: Die Selbstzuordnung im Konsultationsformular ist nicht trennscharf, weil viele Themen mehrere Kapitel berühren und die Textfelder pro Kapitel zeichenbegrenzt waren — Organisationen haben Inhalte deshalb häufig auf andere Kapitelfelder verteilt. Die vier per PDF eingereichten Stellungnahmen haben keine Selbstzuordnung und wurden deshalb pauschal dem Kapitel „Generelle Anmerkungen“ zugeschlagen, obwohl sie inhaltlich quer über alle Kapitel beitragen.
-                              </p>
-                              <p>
-                                 Diese Zusammenfassung ist daher ausdrücklich nicht deckungsgleich mit den unten auf dieser Seite stehenden Stellungnahmen: Aussagen daraus können hier fehlen, wenn sie thematisch besser in ein anderes Kapitel passen — umgekehrt können hier Aussagen erscheinen, die im Formular einem anderen Kapitelfeld zugeordnet waren oder aus einer PDF-Einreichung stammen.
-                              </p>
-                           </div>
                            {hasH2CH4 && (
-                              <div className="flex flex-wrap items-center gap-2 mb-5 text-xs text-muted-foreground">
+                              <div className="flex flex-wrap items-center gap-2 mb-4 text-xs text-muted-foreground">
                                  <span>Springe zu:</span>
                                  <button
                                     onClick={() => scrollToSection(h2Ref)}
@@ -159,6 +148,17 @@ export default function KapitelView({ organisationen, kapitel, orgMap, selectedK
                                  </button>
                               </div>
                            )}
+                           <div className="text-xs text-muted-foreground leading-relaxed border-l-4 border-primary/40 pl-4 mb-5 space-y-1">
+                              <p>
+                                 <strong className="text-foreground">Hinweis:</strong> Die nachfolgende Zusammenfassung ist eine inhaltlich basierte Sicht auf die Konsultation. Sie wurde aus den ungekürzten Original-Stellungnahmen <em>aller</em> Organisationen über <em>alle</em> Formularfelder hinweg erzeugt — einschließlich der vier per PDF eingereichten Stellungnahmen. Jede Position erscheint in der Zusammenfassung des Kapitels, zu dem sie inhaltlich passt, unabhängig davon, in welchem Formularfeld sie ursprünglich eingetragen wurde.
+                              </p>
+                              <p>
+                                 Hintergrund: Die Kapitelzuordnung im Konsultationsformular ist nur ein grober Indikator für den tatsächlichen Inhalt: Viele Themen berühren mehrere Kapitel, und die Textfelder waren pro Kapitel zeichenbegrenzt — Organisationen haben ihre Inhalte deshalb häufig auf andere Kapitelfelder verteilt. Die vier per PDF eingereichten Stellungnahmen haben gar keine Kapitelzuordnung und sind pauschal dem Kapitel „Generelle Anmerkungen“ zugeordnet, obwohl sie inhaltlich quer über alle Kapitel beitragen.
+                              </p>
+                              <p>
+                                 Die Zusammenfassung ist deshalb bewusst nicht deckungsgleich mit den unten stehenden Original-Stellungnahmen: Einzelne Aussagen können hier fehlen, wenn sie thematisch besser in ein anderes Kapitel passen — und umgekehrt können hier Aussagen auftauchen, die im Formular einem anderen Kapitelfeld zugeordnet waren oder aus einer PDF-Einreichung stammen.
+                              </p>
+                           </div>
                            <p className="text-sm text-foreground/90 leading-relaxed whitespace-pre-line">
                               {currentKapitelEntry.zusammenfassung}
                            </p>
